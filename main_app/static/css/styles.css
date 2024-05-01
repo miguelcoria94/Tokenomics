@@ -4,11 +4,26 @@ body {
   flex-direction: column;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Space Mono", monospace;
+}
+
+p,
+a,
+li,
+span {
+  font-family: "Rubik", sans-serif;
+}
+
 main {
   flex-grow: 1;
 }
 
 footer.page-footer {
-  
-  padding-top:0;
+  padding-top: 0;
 }
