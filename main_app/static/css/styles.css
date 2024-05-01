@@ -12,6 +12,7 @@ h4,
 h5,
 h6 {
   font-family: "Space Mono", monospace;
+  color: #121212;
 }
 
 p,
@@ -19,8 +20,23 @@ a,
 li,
 span {
   font-family: "Rubik", sans-serif;
+  color: rgb(88, 102, 126);
 }
 
+.active {
+  color: #121212;
+}
+
+header {
+  padding: 2rem !important;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #121212;
+  text-decoration: none;
+}
 nav ul {
   display: flex;
   align-items: center;
