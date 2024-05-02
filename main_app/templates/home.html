@@ -1,10 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 <h1 id="trending" class="text-3xl font-bold text-gray-900 pt-24 mb-4"><i class="las la-fire-alt"></i> Trending </h1>
-<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate animate__animated">
+<div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate animate__animated mt-8">
 
   {% for crypto in trending %}
   <div
-    class="bg-white shadow overflow-hidden sm:rounded-lg flex justify-between items-center content-center"
+    class="bg-white shadow overflow-hidden sm:rounded-lg flex justify-between items-center content-center p-2 cursor-pointer"
     style="height: 150px"
   >
     <div class="px-4 py-5 sm:px-6">
