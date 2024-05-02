@@ -41,7 +41,12 @@ header {
   /* font-family: "Space Mono", monospace !important; */
   font-size: 1.5rem;
   font-weight: 900;
-  color: #2663d6;
+  background: #282ECF;
+background: linear-gradient(to right, #282ECF 0%, #9595FF 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+
   text-decoration: none;
 }
 nav ul {
