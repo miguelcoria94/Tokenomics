@@ -24,6 +24,7 @@ def home(request):
     }
     trending_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/trending/latest'
     all_crypto_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+    global_metrics_url = 'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest'
     
    
     trending_parameters = {
@@ -37,6 +38,11 @@ def home(request):
         'convert': 'USD'
     }
 
+    global_metrics_parameters = {
+        'convert': 'USD'
+    }
+
+
     try:
         trending_response = requests.get(trending_url, headers=headers, params=trending_parameters)
         trending_response.raise_for_status() 
@@ -45,6 +51,8 @@ def home(request):
         all_crypto_response = requests.get(all_crypto_url, headers=headers, params=all_crypto_parameters)
         all_crypto_response.raise_for_status()
         all_crypto_data = all_crypto_response.json()
+
+        global_metrics_response = requests.get(global_metrics_url, headers=headers, params=global_metrics_parameters)
 
     except requests.RequestException as e:
         return HttpResponse('Failed to retrieve data: ' + str(e), status=500)
@@ -58,5 +66,17 @@ def home(request):
         'trending_start': trending_start,
         'trending_limit': trending_limit,
         'all_start': all_start,
-        'all_limit': all_limit
+        'all_limit': all_limit,
+        'global_metrics': global_metrics_response.json().get('data', {})
     })
+
+# login, logout, register
+
+def login(request):
+    return render(request, 'login.html', name='login')
+
+def logout(request):
+    return render(request, 'logout.html', name='logout')
+
+def register(request):
+    return render(request, 'register.html', name='register')

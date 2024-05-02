@@ -100,10 +100,44 @@
 
 
 <div id="market">
+    
     <h1 class="text-3xl font-bold text-gray-900 pt-8 mb-4"><i class="las la-coins"></i> All Cryptocurrencies</h1>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate animate__animated bg-white mt-12 shadow">
+  <div
+  >
+    <div class="px-4 py-5 sm:px-6" style="border-right: 2px solid #f3f4f6">
+      <h3 class="text-lg font-medium text-gray-900">Market Cap</h3>
+      <p class="mt-1 max-w
+        -2xl text-sm text-gray-500 border-r">
+            $<span class="market-cap">{{ global_metrics.quote.USD.total_market_cap | floatformat:2 }}</span>
+        </p>
+    </div>
+    </div>
+
+    <div
+    >
+    <div class="px-4 py-5 sm:px-6" style="border-right: 2px solid #f3f4f6">
+      <h3 class="text-lg font-medium text-gray-900">24h Volume</h3>
+      <p class="mt-1 max-w
+        -2xl text-sm text-gray-500">
+            $<span class="market-cap">{{ global_metrics.quote.USD.total_volume_24h | floatformat:2 }}</span>
+        </p>
+    </div>
+    </div>
+    <div
+    >
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg font-medium text-gray-900">BTC Dominance</h3>
+      <p class="mt-1 max-w
+        -2xl text-sm text-gray-500">
+            {{ global_metrics.btc_dominance | floatformat:2 }}%
+        </p>
+    </div>
+    </div>
+</div>
     <table class="min-w-full divide-y divide-gray-200 shadow rounded-md">
-        <thead>
-        <tr>
+        <thead class="">
+        <tr class="bg-gray-50">
             <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
             >
             Rank
@@ -127,7 +161,7 @@
             7d
             </th>
             <th class="px-6 py-3 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
-            style="position: relative; right: 20px;"
+          
             >
             Last 7 Days
         </th>
@@ -203,13 +237,13 @@
     </table>
     <div class="flex justify-end gap-4 items-center mt-8">
     {% if all_start > 0 %}
-    <a href="{% url 'home' %}?all_start={{ all_start|add:'-100' }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}"
+    <a href="{% url 'home' %}?all_start={{ all_start|add:'-100' }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}#market"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         <i class="las la-arrow-left"></i> Previous
     </a>
     {% endif %}
     <p class="text-gray-500 text-sm">Viewing {{ all_start }} - {{ all_start|add:all_limit }} of 9850 </p>
-    <a href="{% url 'home' %}?all_start={{ all_start|add:all_limit }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}"
+    <a href="{% url 'home' %}?all_start={{ all_start|add:all_limit }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}#market"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         Next <i class="las la-arrow-right"></i>
     </a>
