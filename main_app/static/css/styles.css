@@ -2,7 +2,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #f4f7fc;
+  background-color: #e5eaf2;
   padding: 0rem 5rem;
 }
 
@@ -11,17 +11,15 @@ h2,
 h3,
 h4,
 h5,
-h6
- {
+h6 {
   font-family: "Space Mono", monospace;
   /* roboto */
   color: #121212;
 }
 
 p {
-    font-family: "Space Mono", monospace;
-    color: rgb(88, 102, 126);
-    
+  font-family: "Space Mono", monospace;
+  color: rgb(88, 102, 126);
 }
 
 a,
