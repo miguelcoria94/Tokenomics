@@ -83,7 +83,7 @@
     {% if trending_start > 0 %}
 <a href="{% url 'home' %}?trending_start={{ trending_start|add:'-6' }}&trending_limit={{ trending_limit }}&all_start={{ all_start }}&all_limit={{ all_limit }}"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    <i class="las la-arrow-left"></i> Previous
+    <i class="las la-angle-left"></i> Previous
 </a>
 
 
@@ -93,7 +93,7 @@
 
         <a href="{% url 'home' %}?trending_start={{ trending_start|add:trending_limit }}&trending_limit={{ trending_limit }}&all_start={{ all_start }}&all_limit={{ all_limit }}"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Next <i class="las la-arrow-right"></i>
+        Next <i class="las la-angle-right"></i>
     </a>
 </div>
 
@@ -239,13 +239,13 @@
     {% if all_start > 0 %}
     <a href="{% url 'home' %}?all_start={{ all_start|add:'-100' }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}#market"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        <i class="las la-arrow-left"></i> Previous
+        <i class="las la-angle-left"></i> Previous
     </a>
     {% endif %}
     <p class="text-gray-500 text-sm">Viewing {{ all_start }} - {{ all_start|add:all_limit }} of 9850 </p>
     <a href="{% url 'home' %}?all_start={{ all_start|add:all_limit }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}#market"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Next <i class="las la-arrow-right"></i>
+        Next <i class="las la-angle-right"></i>
     </a>
 </div>
                 
