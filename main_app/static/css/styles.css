@@ -11,16 +11,18 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  font-family: "Space Mono", monospace;
+h6,
+p {
+  font-family: "Rubik", sans-serif;
+  /* roboto */
   color: #121212;
 }
 
-p,
 a,
 li,
 span {
-  font-family: "Rubik", sans-serif;
+  
+  font-family: "Space Mono", monospace;
   color: rgb(88, 102, 126);
 }
 
@@ -33,6 +35,7 @@ header {
 }
 
 .logo {
+    font-family: "Rubik", sans-serif;
   font-size: 1.5rem;
   font-weight: 500;
   color: #121212;
@@ -86,4 +89,40 @@ footer.page-footer {
   padding-top: 2px;
   padding-bottom: 3px;
   filter: hue-rotate(85deg) saturate(80%) brightness(0.85);
+}
+
+/* small screen */
+
+@media (max-width: 768px) {
+  body {
+    padding: 0rem 1rem;
+  }
+  header {
+    padding: 1rem !important;
+  }
+  .logo {
+    font-size: 1.2rem;
+  }
+  nav ul li {
+    font-size: 1rem;
+  }
+  .down {
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    box-sizing: content-box;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    filter: hue-rotate(300deg) saturate(210%) brightness(0.7) contrast(170%);
+  }
+
+  .up {
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    box-sizing: content-box;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    filter: hue-rotate(85deg) saturate(80%) brightness(0.85);
+  }
 }
