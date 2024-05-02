@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<h1 class="text-3xl font-bold text-gray-900 pt-24 mb-4"><i class="las la-fire-alt"></i> Trending </h1>
+<h1 id="trending" class="text-3xl font-bold text-gray-900 pt-24 mb-4"><i class="las la-fire-alt"></i> Trending </h1>
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate animate__animated">
 
   {% for crypto in trending %}
@@ -9,6 +9,7 @@
   >
     <div class="px-4 py-5 sm:px-6">
         <div class="flex items-center">
+            
             <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ crypto.id }}.png" alt="{{ crypto.name }}" class="h-8 w-8 mr-4" />
             <h3 class="text-lg font-medium text-gray-900">{{ crypto.name }}</h3>
         </div>
@@ -78,26 +79,142 @@
 </div>
 
 
-<div class="flex justify-end gap-4 items-center">
-    {% if start > 0 %}
-<div class="flex justify-center mt-4 ">
-  <a href="{% url 'home' %}?start={{ start|add:'-6' }}&limit={{ limit }}"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded next">
-    <i class="las la-arrow-left"></i> Previous
-  </a>
-</div>
-{% endif %}
-
-<div class="flex justify-center mt-4">
-  <p class="text-gray-900">Showing {{ start }} to {{ start|add:limit }} of 100</p>
-</div>
-
-<div class="flex justify-center mt-4">
-  <a href="{% url 'home' %}?start={{ start|add:limit }}&limit={{ limit }}"
+<div class="flex justify-end gap-4 items-center mt-8">
+    {% if trending_start > 0 %}
+<a href="{% url 'home' %}?trending_start={{ trending_start|add:'-6' }}&trending_limit={{ trending_limit }}&all_start={{ all_start }}&all_limit={{ all_limit }}"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Next <i class="las la-arrow-right"></i>
-  </a>
+    <i class="las la-arrow-left"></i> Previous
+</a>
+
+
+{% endif %}
+<!-- page counter and count -->
+<p class="text-gray-500 text-sm">Viewing {{ trending_start }} - {{ trending_start|add:trending_limit }} of {{ trending_count }} 100 </p>
+
+        <a href="{% url 'home' %}?trending_start={{ trending_start|add:trending_limit }}&trending_limit={{ trending_limit }}&all_start={{ all_start }}&all_limit={{ all_limit }}"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Next <i class="las la-arrow-right"></i>
+    </a>
 </div>
+
+
+
+<div id="market">
+    <h1 class="text-3xl font-bold text-gray-900 pt-8 mb-4"><i class="las la-coins"></i> All Cryptocurrencies</h1>
+    <table class="min-w-full divide-y divide-gray-200 shadow rounded-md">
+        <thead>
+        <tr>
+            <td class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+            >
+            Rank
+            </td>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Name
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Symbol
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Price
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Volume
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Market Cap
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            7d
+            </th>
+            <th class="px-6 py-3 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+            style="position: relative; right: 20px;"
+            >
+            Last 7 Days
+        </th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200 ">
+        {% for crypto in all_crypto %}
+        <tr class="cursor-pointer">
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="text-sm leading-5 text-gray-500">#{{ crypto.cmc_rank }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="flex items-center ">
+                
+                <div class="flex-shrink-0 h-6 w-auto">
+                    
+                <img
+                    class="h-10 w-10 rounded-full"
+                    src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ crypto.id }}.png"
+                    alt=""
+                />
+                </div>
+                <div class="ml-4 mt-4">
+                    <div class="text-sm leading-5 font-medium text-gray-900">{{ crypto.name }}</div>
+                </div>
+            </div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="text-sm leading-5 text-gray-900">{{ crypto.symbol }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="text-sm leading-5 text-gray-900">{{ crypto.quote.USD.price | floatformat:2 }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+                        <div class="text-sm leading-5 text-gray-900"> $<span class="market-cap">{{ crypto.quote.USD.volume_24h | floatformat:2 }}</span></div>
+
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="text-sm leading-5 text-gray-900"> $<span class="market-cap">{{ crypto.quote.USD.market_cap | floatformat:2 }}</span></div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap">
+            <div class="text-sm leading-5 text-gray-900">
+                {% if crypto.quote.USD.percent_change_7d < 0 %}
+                <span class="text-red-500">{{ crypto.quote.USD.percent_change_7d | floatformat:2 }}%</span>
+                {% else %}
+                <span class="text-green
+                -500">{{ crypto.quote.USD.percent_change_7d | floatformat:2 }}%</span>
+                {% endif %}
+            </div>
+            </td>
+            <td class="px-6 py-4 whitespace-no-wrap ">
+            <div class="text-sm leading-5 text-gray-900 mr-auto " style="position: relative; top: 20px; ">
+                {% if crypto.quote.USD.percent_change_7d < 0 %}
+                <img
+                src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/{{ crypto.id }}.svg"
+                class="down w-full"
+                alt="7d"
+                style="mix-blend-mode: multiply"
+                />
+                {% else %}
+                <img
+                src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/{{ crypto.id }}.svg"
+                class="up w-full"
+                alt="7d"
+                style="mix-blend-mode: multiply"
+                />
+                {% endif %}
+            </div>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="flex justify-end gap-4 items-center mt-8">
+    {% if all_start > 0 %}
+    <a href="{% url 'home' %}?all_start={{ all_start|add:'-100' }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <i class="las la-arrow-left"></i> Previous
+    </a>
+    {% endif %}
+    <p class="text-gray-500 text-sm">Viewing {{ all_start }} - {{ all_start|add:all_limit }} of {{ all_count }} </p>
+    <a href="{% url 'home' %}?all_start={{ all_start|add:all_limit }}&all_limit={{ all_limit }}&trending_start={{ trending_start }}&trending_limit={{ trending_limit }}"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Next <i class="las la-arrow-right"></i>
+    </a>
+</div>
+                
 </div>
 
 {% endblock %}
