@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<h1>Top 10 Cryptocurrencies</h1>
+<h1 class="text-3xl font-bold text-gray-900">Top 100 Cryptocurrencies</h1>
 <div class="grid grid-cols-3 gap-4 mt-8">
   {% for crypto in cryptos %}
   <div
@@ -7,8 +7,31 @@
     style="height: 150px"
   >
     <div class="px-4 py-5 sm:px-6">
-      <h3 class="text-lg font-medium text-gray-900">{{ crypto.name }}</h3>
+        <div class="flex items-center">
+            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ crypto.id }}.png" alt="{{ crypto.name }}" class="h-8 w-8 mr-4" />
+            <h3 class="text-lg font-medium text-gray-900">{{ crypto.name }}</h3>
+        </div>
+
       <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ crypto.symbol }}</p>
+      <h2>
+        <span class="text-2xl font-bold text-gray-900">
+          {{ crypto.quote.BTC.price | floatformat:8 }}
+        </span>
+      </h2>
+
+      <h2>
+        <span class="text-2xl font-bold text-gray-900">
+          ${{ crypto.quote.USD.price | floatformat:2 }}
+        </span>
+      </h2>
+
+      
+        
+        <p class="mt-1 max-w-2xl text-sm text-gray-500 ">
+            Market Cap: $<span class="market-cap">{{ crypto.quote.USD.market_cap | floatformat:2 }}</span>
+          
+        </p>
+      </span>
     </div>
 
     {% if crypto.quote.USD.percent_change_7d < 0 %}

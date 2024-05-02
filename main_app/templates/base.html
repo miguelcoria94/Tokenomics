@@ -37,4 +37,24 @@ https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css
       </nav>
     <main>{% block content %} {% endblock %}</main>
   </body>
+
+  <script defer>
+// Format the market cap to "num.num M/B"
+const marketCapElements = document.querySelectorAll('.market-cap');
+
+function formatMarketCap(num) {
+    if (num < 1e6) {
+        return num.toLocaleString();
+    } else if (num < 1e9) {
+        return (num / 1e6).toFixed(1) + 'M';
+    } else {
+        return (num / 1e9).toFixed(1) + 'B';
+    }
+}
+
+marketCapElements.forEach((el) => {
+    const marketCapValue = parseFloat(el.textContent.trim());
+    el.textContent = formatMarketCap(marketCapValue);
+});
+</script>
 </html>
