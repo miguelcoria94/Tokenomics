@@ -70,6 +70,45 @@ def home(request):
         'global_metrics': global_metrics_response.json().get('data', {})
     })
 
+def get_single_crypto(request, crypto_id):
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': env('COINMARKETCAP_API_KEY')
+    }
+    url = f'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
+    parameters = {
+        'id': crypto_id
+    }
+
+    chart_url = f'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical'
+    chart_parameters = {
+        'id': crypto_id
+    }
+
+
+
+    try:
+        response = requests.get(url, headers=headers, params=parameters)
+        response.raise_for_status()
+        chart_response = requests.get(chart_url, headers=headers, params=chart_parameters)
+        chart_response.raise_for_status()
+        
+        data = response.json()
+        chart_data = chart_response.json()
+
+        chart_data_json = json.dumps(chart_data['data']['quotes'])
+        return render(request, 'single_crypto.html', {
+        'crypto': data['data'][str(crypto_id)], 'chart_data': chart_data_json
+    })
+
+    except requests.RequestException as e:
+        return HttpResponse('Failed to retrieve data: ' + str(e), status=500)
+
+    except ValueError:
+        return HttpResponse('Failed to parse JSON response', status=500)
+
+    
+
 # login, logout, register
 
 def login(request):

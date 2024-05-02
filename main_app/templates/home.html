@@ -3,8 +3,10 @@
 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate animate__animated mt-8">
 
   {% for crypto in trending %}
+  <a href="{% url 'single_crypto' crypto.id %}" class="h-full">
   <div
     class="bg-white shadow overflow-hidden sm:rounded-lg flex justify-between items-center content-center p-2 cursor-pointer"
+    style="min-height: 200px"
    
   >
     <div class="px-4 py-5 sm:px-6">
@@ -75,6 +77,8 @@
     </div>
     {% endif %}
   </div>
+
+  </a>
   {% endfor %}
 </div>
 
