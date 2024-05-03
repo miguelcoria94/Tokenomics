@@ -1,55 +1,184 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container mt-8">
-  <button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
-  >
-    <a href="{% url 'home' %}"><i class="las la-angle-left"></i> Back</a>
-  </button>
+  <div class="flex justify-between">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
+    >
+      <a href="{% url 'home' %}"><i class="las la-angle-left"></i> Back</a>
+    </button>
+    <div>
 
-
-  <div>
-    <!-- add_to_watchlist -->
-
-    <form method="POST" action="{% url 'add_to_watchlist' %}">
-      {% csrf_token %}
-      <input type="hidden" name="crypto_id" value="{{ crypto.id }}" />
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
-      >
-        Add to Watchlist
-      </button>
-    </form>
+      {% if user.is_authenticated %}
+      <form method="POST" action="{% url 'add_to_watchlist' %}">
+        {% csrf_token %}
+        <input type="hidden" name="crypto_id" value="{{ crypto.id }}" />
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
+        >
+          <i class="las la-list-ol"></i> Add to Watchlist
+        </button>
+      </form>
+      {% endif %}
+    </div>
   </div>
+
   <div class="grid grid-cols-4 gap-4">
-    
     <div
       class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-3"
       style="height: 500px"
     >
-      <h1>Price Chart for {{ crypto.name }}</h1>
+      <div class="flex gap-4 items-center">
+        <img
+          src="{{ crypto.logo }}"
+          alt="{{ crypto.name }}"
+          class="w-8 h-8 rounded-full inline"
+        />
+        <h1 class="font-bold">Price Chart for {{ crypto.name }}</h1>
+        <div class="flex gap-2 items-center">
+          <p class="text-gray-500 text-sm price">Price: ${{ price }}</p>
+        </div>
+      </div>
       <canvas id="cryptoChart" class="mt-4"></canvas>
     </div>
 
     <div class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-1">
-      <h1>{{ crypto.name }}</h1>
-      <p class="text-gray-500 text-sm">{{ crypto.symbol }}</p>
-      <p class="text-gray-500 text-sm">Rank: {{ crypto.rank }}</p>
-      <p class="text-gray-500 text-sm">
-        Market Cap: <span class="market-cap">{{ crypto.market_cap }}</span>
-      </p>
-      <p class="text-gray-500 text-sm">Price: ${{ crypto.price }}</p>
-      <p class="text-gray-500 text-sm">Volume: ${{ crypto.volume }}</p>
-      <p class="text-gray-500 text-sm">Supply: {{ crypto.supply }}</p>
-      <p class="text-gray-500 text-sm">
-        Change (24h): {{ crypto.change_24h }}%
-      </p>
-      <p class="text-gray-500 text-sm">Change (7d): {{ crypto.change_7d }}%</p>
-      <p class="text-gray-500 text-sm">
-        Change (30d): {{ crypto.change_30d }}%
-      </p>
-      <p class="text-gray-500 text-sm">Change (1y): {{ crypto.change_1y }}%</p>
+      <div>
+        <h1 class="font-bold mb-4">By the Numbers</h1>
+        <p class="text-gray-500 text-sm mb-2">
+          <span class="font-semibold">Symbol:</span>{{ crypto.symbol }}</p>
+        <p class="text-gray-500 text-sm mb-2">
+          <span class="font-semibold">Market Cap:</span>
+ <span class="market-cap">{{ coin_number_date.market_cap }}</span>
+        </p>
+        <p class="text-gray-500 text-sm price mb-2">
+          <span class="font-semibold">Price:</span>
+          <span class="price">${{ price }}</span>
+           </p>
+        <p class="text-gray-500 text-sm volume mb-2">
+          <span class="font-semibold">Volume:</span>
+          <span class="volume">{{ coin_number_date.volume_24h }}</span>
+          
+        </p>
+        <p class="text-gray-500 text-sm mb-2">
+          <span class="font-semibold">Total Supply:</span>
+          {{ coin_number_date.total_supply }}
+        </p>
+        <p class="text-gray-500 text-sm mb-2">
+          <span class="font-semibold">Circulating Supply:</span>
+          {{ coin_number_date.circulating_supply }}
+        </p>
+        <p class="text-gray-500 text-sm mb-2">
+          <span class="font-semibold">Latest Update:</span>
+           {{ coin_number_date.timestamp }}
+        </p>
+
+      </div>
+
+      
+    </div>
+
+    <div class="bg-white overflow-hidden sm:rounded-lg p-8 col-span-4">
+        <div class="converter bg-white p-4 mt-4 shadow rounded">
+          <h1 class="font-bold mb-2">USD to {{ crypto.name }} Converter</h1>
+          <input
+            type="number"
+            id="usdAmount"
+            placeholder="Enter USD amount"
+            class="border py-2 px-3 text-grey-darkest rounded mb-2"
+          />
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded convert"
+          >
+            Convert
+          </button>
+          <p id="conversionResult" class="text-gray-500 mt-2"></p>
+        </div>
+      </div>
+
+    <div class="bg-white overflow-hidden sm:rounded-lg p-8 col-span-4">
+      <!-- socials -->
+      <div class="bg-white overflow-hidden sm:rounded-lg p-8">
+        <!-- desc -->
+
+        <div class="mb-8">
+          <h1 class="font-bold mb-4">Description</h1>
+          <p class="text-gray-500 text-sm">{{ crypto.description }}</p>
+        </div>
+        <div class="mb-8">
+          <h1 class="font-bold mb-4">Official links for {{ crypto.name }}</h1>
+          <div class="flex gap-2 mt-4">
+            {% if crypto.urls.website %}
+            <a
+              href="{{ crypto.urls.website.0 }}"
+              target="_blank"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="las la-globe"></i> Website</a
+            >
+            {% endif %}
+            {% if crypto.urls.explorer %}
+            <a
+              href="{{ crypto.urls.explorer.0 }}"
+              target="_blank"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="las la-search"></i> Explorer</a
+            >
+            {% endif %}
+            {% if crypto.urls.twitter %}
+            <a
+              href="{{ crypto.urls.twitter.0 }}"
+              target="_blank"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="lab la-twitter"></i> Twitter</a
+            >
+            {% endif %}
+            {% if crypto.urls.facebook %}
+            <a
+              href="{{ crypto.urls.facebook.0 }}"
+              target="_blank"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="lab la-facebook"></i> Facebook</a
+            >
+            {% endif %} {% if crypto.urls.reddit %}
+            <a
+              href="{{ crypto.urls.reddit.0 }}"
+              target="_blank"
+              class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="lab la-reddit"></i> Reddit</a
+            >
+            {% endif %} {% if crypto.urls.telegram %}
+            <a
+              href="{{ crypto.urls.telegram.0 }}"
+              target="_blank"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="lab la-telegram"></i> Telegram</a
+            >
+            {% endif %} {% if crypto.urls.discord %}
+            <a
+              href="{{ crypto.urls.discord.0 }}"
+              target="_blank"
+              class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+              ><i class="lab la-discord"></i> Discord</a
+            >
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h1 class="font-bold mb-4">Tags</h1>
+          <div class="grid grid-cols-4 gap-2">
+            {% for tag in crypto.tags %}
+            <span
+              class="bg-gray-200 text-gray-800 font-semibold py-1 px-2 rounded-full text-xs"
+              >{{ tag }}</span
+            >
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-{% endblock %}
+  
+
+  {% endblock %}
+</div>

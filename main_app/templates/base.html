@@ -162,6 +162,28 @@ marketCapElements.forEach((el) => {
 }
 
     });
+
+    
 </script>
+
+<script>
+  document.querySelector('.price').innerHTML = formatNumber({{ price }});
+ 
+    function convertToCrypto() {
+        let usdAmount = document.getElementById('usdAmount').value; 
+        let cryptoPrice = {{ price }}; 
+        let amountInCrypto = (usdAmount / cryptoPrice).toFixed(8); 
+
+        document.getElementById('conversionResult').innerHTML = `${formatNumber(usdAmount)} USD is approximately ${amountInCrypto} ${'{{ crypto.symbol }}'}`;
+    }
+
+    function formatNumber(num) {
+        return '$' + parseFloat(num).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+
+    document.querySelector('.convert').addEventListener('click', convertToCrypto);
+</script>
+
+
 
 </html>

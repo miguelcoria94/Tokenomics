@@ -107,8 +107,11 @@ def get_single_crypto(request, crypto_id):
         chart_data = chart_response.json()
 
         chart_data_json = json.dumps(chart_data['data']['quotes'])
+        price = chart_data['data']['quotes'][0]['quote']['USD']['price']
+        coin_number_date = chart_data['data']['quotes'][0]['quote']['USD']
+
         return render(request, 'single_crypto.html', {
-        'crypto': data['data'][str(crypto_id)], 'chart_data': chart_data_json
+        'crypto': data['data'][str(crypto_id)], 'chart_data': chart_data_json, 'price': price, 'coin_number_date': coin_number_date
     })
 
     except requests.RequestException as e:
@@ -146,7 +149,7 @@ def viewWatchlist(request):
     cryptos = watchlist.cryptos.all()
     return render(request, 'watchlist.html', {'cryptos': cryptos})
 
-
+@login_required
 def add_to_watchlist(request):
     crypto_id = request.POST.get('crypto_id')
     if not Cryptocurrency.objects.filter(crypto_id=crypto_id).exists():
