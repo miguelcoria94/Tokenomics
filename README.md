@@ -5,7 +5,7 @@ A crypto market app built with Django and tailwind that lets create a watchlist 
 
 ## Demo
 
-Link to demo: [Track Coins Now]()  
+Link to demo: [Track Coins Now](https://tokenomics-1a20fb7f670c.herokuapp.com/)  
 
 ## Prototype 
 
