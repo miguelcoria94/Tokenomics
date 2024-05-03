@@ -56,7 +56,7 @@ https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'signup' %}">Register</a></li>
             {% endif %}
         </ul>
       </nav>
@@ -102,10 +102,6 @@ marketCapElements.forEach((el) => {
 </script>
 
 <script>
-
-  // Assuming 'availabilityStartTime' and 'availabilityEndTime' are already Date objects
-
-  // format time to Date 12-hour format with AM/PM from 2024-01-01T00:00:00Z
 
   function formatDateTime(isoDateString) {
     const date = new Date(isoDateString);

@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="h-full flex justify-center items-center" style="height: 68vh">
+  <div class="bg-white p-4 p-md-5">
+    <p class="text-center text-danger">{{ error_message }}</p>
+
+    <form method="POST" action="{% url 'signup' %}" class="bg-light p-4 p-md-5 contact-form">
+      {% csrf_token %} {{ form }}
+
+      <button type="submit" class="btn btn-primary mt-4" value="Sign Up">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  button {
+    background-color: #4c61af;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* the input requierment styles  */
+
+  .helptext {
+    color: #6c757d;
+    font-size: 70%;
+  }
+
+  .text-danger {
+    color: #dc3545 !important;
+  }
+</style>
+
+{% endblock %}

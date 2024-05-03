@@ -1,21 +1,13 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
+from django.contrib.auth import login
 
-# <a
-#     href="/?start={{ start + 6 }}&limit={{ limit }}"
-#     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-#     >Next 6</a
-#   >
-
-# login, logout, register
 
 urlpatterns = [
-    
     path('', views.home, name='home'),
     path('crypto/<int:crypto_id>/', views.get_single_crypto, name='single_crypto'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('register/', views.register, name='register'),
-    
-
+    path('login/', auth_views.LoginView.as_view(template_name='your_login_template.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    path('signup/', views.signup, name='signup'),
 ]

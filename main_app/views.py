@@ -1,8 +1,15 @@
 import json
 from django.http import HttpResponse
 import environ
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
+
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+
 env = environ.Env()
 
 def safe_int(value, default=0):
@@ -117,5 +124,17 @@ def login(request):
 def logout(request):
     return render(request, 'logout.html', name='logout')
 
-def register(request):
-    return render(request, 'register.html', name='register')
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('/accounts/login/')
+        else:
+            error_message = 'Invalid signup - try again'
+    else:
+        form = UserCreationForm()
+
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
