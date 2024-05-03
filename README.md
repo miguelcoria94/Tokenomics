@@ -12,17 +12,18 @@ Link to demo: [Track Coins Now]()
 Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-django-app)
 
 
+
 ## MVP
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/7typTC4/Screenshot-2024-05-03-at-3-16-29-AM.png" width="800" height="400">
+  <img src="https://i.ibb.co/7typTC4/Screenshot-2024-05-03-at-3-16-29-AM.png" width="auto" height="auto">
 
 </div>
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/rsQX6Fm/Screenshot-2024-05-03-at-3-18-38-AM.png" width="800" height="400">
+  <img src="https://i.ibb.co/rsQX6Fm/Screenshot-2024-05-03-at-3-18-38-AM.png" width="auto" height="auto">
 
 </div>
 
@@ -41,6 +42,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 - Convert USD to COIN Price
 - Coin Charts
 
+
 ## Next Steps
 
 - Create multiple watchlist
@@ -51,7 +53,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/pbwKczb/carbon-5.png" width="auto" height="500">
+  <img src="https://i.ibb.co/pbwKczb/carbon-5.png" width="800" height="auto">
 
 </div>
 
@@ -61,7 +63,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/R40MtTt/carbon-4.png" width="auto" height="500">
+  <img src="https://i.ibb.co/R40MtTt/carbon-4.png" width="800" height="auto">
 
 </div>
 
@@ -72,7 +74,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/t8TCw6r/carbon-3.png" width="auto" height="500">
+  <img src="https://i.ibb.co/t8TCw6r/carbon-3.png" width="800" height="auto">
 
 </div>
 
