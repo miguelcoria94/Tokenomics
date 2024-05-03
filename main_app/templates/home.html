@@ -9,10 +9,14 @@
     style="min-height: 200px"
    
   >
-    <div class="px-4 py-5 sm:px-6">
-        <div class="flex items-center">
-            
-            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ crypto.id }}.png" alt="{{ crypto.name }}" class="h-8 w-8 mr-4" />
+    <div class="px-4 py- sm:px-6">
+      <!-- rank -->
+      <div class="text-xs leading-5 text-gray-500 mb-2">#{{ crypto.cmc_rank }}</div>
+        <div class="flex items-center gap-2">
+            <div class="flex gap-2 items-center">
+              
+              <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ crypto.id }}.png" alt="{{ crypto.name }}" class="h-8 w-8 mr-8" />
+            </div>
             <h3 class="text-lg font-medium text-gray-900">{{ crypto.name }}</h3>
         </div>
 
@@ -28,9 +32,6 @@
           ${{ crypto.quote.USD.price | floatformat:2 }}
         </span>
       </h2>
-
-      <!-- volme -->
-
         <span class="mt-1 max-w-2xl text-sm text-gray-500 ">
             Volume: $<span class="market-cap">{{ crypto.quote.USD.volume_24h | floatformat:2 }}</span>
         </span>

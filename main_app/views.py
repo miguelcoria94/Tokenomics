@@ -4,7 +4,7 @@ import environ
 from django.shortcuts import render, redirect
 import requests
 
-from django.contrib.auth import login
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 
 from django.shortcuts import render, redirect
@@ -131,7 +131,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             Watchlist.objects.create(user=user)
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            auth_login(request, user)
             return redirect('home')
         else:
             error_message = 'Invalid signup - try again'
