@@ -41,11 +41,10 @@ header {
   /* font-family: "Space Mono", monospace !important; */
   font-size: 1.5rem;
   font-weight: 900;
-  background: #282ECF;
-background: linear-gradient(to right, #282ECF 0%, #9595FF 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-
+  background: #3b82f6;
+  background: linear-gradient(to left, #3b82f6 0%, rgb(103, 103, 181) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   text-decoration: none;
 }

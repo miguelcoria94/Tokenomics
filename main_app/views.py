@@ -9,6 +9,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+# import models from current directory
+from .models import Cryptocurrency, Watchlist
+from django.contrib.auth.decorators import login_required
 
 env = environ.Env()
 
@@ -114,9 +117,6 @@ def get_single_crypto(request, crypto_id):
     except ValueError:
         return HttpResponse('Failed to parse JSON response', status=500)
 
-    
-
-# login, logout, register
 
 def login(request):
     return render(request, 'login.html', name='login')
@@ -130,7 +130,9 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('/accounts/login/')
+            Watchlist.objects.create(user=user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('home')
         else:
             error_message = 'Invalid signup - try again'
     else:
@@ -138,3 +140,73 @@ def signup(request):
 
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+def viewWatchlist(request):
+    watchlist = Watchlist.objects.get(user=request.user)
+    cryptos = watchlist.cryptos.all()
+    return render(request, 'watchlist.html', {'cryptos': cryptos})
+
+
+def add_to_watchlist(request):
+    crypto_id = request.POST.get('crypto_id')
+    if not Cryptocurrency.objects.filter(crypto_id=crypto_id).exists():
+        headers = {
+            'Accepts': 'application/json',
+            'X-CMC_PRO_API_KEY': env('COINMARKETCAP_API_KEY')
+        }
+        url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
+        parameters = {'id': crypto_id}
+
+        try:
+            response = requests.get(url, headers=headers, params=parameters)
+            response.raise_for_status()
+            data = response.json()
+            crypto_data = next(iter(data.get('data').values())) 
+    
+            Cryptocurrency.objects.create(crypto_id=crypto_data['id'])
+        except requests.RequestException as e:
+            return HttpResponse('Failed to retrieve data: ' + str(e), status=500)
+        except ValueError:
+            return HttpResponse('Failed to parse JSON response', status=500)
+
+
+    watchlist = Watchlist.objects.get_or_create(user=request.user)[0]
+    crypto = Cryptocurrency.objects.get(crypto_id=crypto_id)
+    watchlist.cryptos.add(crypto)
+    return redirect('watchlist')
+
+    
+
+@login_required
+def watchlist(request):
+    try:
+        watchlist = Watchlist.objects.get(user=request.user)
+    except Watchlist.DoesNotExist:
+        watchlist = Watchlist.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        crypto_id = request.POST.get('crypto_id')
+        if crypto_id:
+            crypto = Cryptocurrency.objects.get(crypto_id=crypto_id)
+            watchlist.cryptos.add(crypto)
+            return redirect('watchlist')
+
+    return render(request, 'watchlist.html', {'watchlist': watchlist})
+
+def remove_from_watchlist(request, crypto_id):
+    crypto = Cryptocurrency.objects.get(crypto_id=crypto_id)
+    watchlist = Watchlist.objects.get(user=request.user)
+    watchlist.cryptos.remove(crypto)
+    watchlist.save()
+    # add btc with id of 1
+    btc = Cryptocurrency.objects.get(crypto_id=1)
+    watchlist.cryptos.add(btc)
+
+    return redirect('watchlist')
+
+def clear_watchlist(request):
+    watchlist = Watchlist.objects.get(user=request.user)
+    watchlist.cryptos.clear()
+    watchlist.save()
+    return redirect('watchlist')
+

@@ -53,10 +53,18 @@ https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css
 
         <ul class="gap-4">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+            <div class="flex flex-col ">
+              <div class="flex gap-8 flex-end">
+                <li><a href="{% url 'watchlist' %}" class="text-blue-800 hover:text-blue-500">Watchlist</a></li>
+                  <li><a href="{% url 'logout' %}" class="text-blue-800 hover:text-blue-500">Logout</a></li>
+              </div>
+                  <li class="text-xs mt-2" >Currently logged in as {{ user }}</li>
+
+            </div>
+                
             {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'signup' %}">Register</a></li>
+                <li><a href="{% url 'login' %}" class="text-blue-800 hover:text-blue-500">Login</a></li>
+                <li><a href="{% url 'signup' %}" class="text-blue-800 hover:text-blue-500">Register</a></li>
             {% endif %}
         </ul>
       </nav>

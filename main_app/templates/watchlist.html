@@ -1,31 +1,19 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container mt-8">
+<div>
   <button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8 mt-12"
   >
     <a href="{% url 'home' %}"><i class="las la-angle-left"></i> Back</a>
   </button>
 
-
-  <div>
-    <!-- add_to_watchlist -->
-
-    <form method="POST" action="{% url 'add_to_watchlist' %}">
-      {% csrf_token %}
-      <input type="hidden" name="crypto_id" value="{{ crypto.id }}" />
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-8"
-      >
-        Add to Watchlist
-      </button>
-    </form>
-  </div>
+  <h1 id="trending" class="text-3xl font-bold text-gray-900 pt-4 mb-4">
+    <i class="las la-binoculars"></i> Watchlist
+  </h1>
+  <!-- Check if the watchlist has any cryptocurrencies -->
+  {% if watchlist.cryptos.all %}
   <div class="grid grid-cols-4 gap-4">
-    
-    <div
-      class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-3"
-      style="height: 500px"
-    >
+    {% for crypto in watchlist.cryptos.all %}
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-3">
       <h1>Price Chart for {{ crypto.name }}</h1>
       <canvas id="cryptoChart" class="mt-4"></canvas>
     </div>
@@ -49,7 +37,10 @@
       </p>
       <p class="text-gray-500 text-sm">Change (1y): {{ crypto.change_1y }}%</p>
     </div>
+    {% endfor %}
   </div>
+  {% else %}
+  <p class="text-center text-danger">Your watchlist is empty.</p>
+  {% endif %}
 </div>
-
 {% endblock %}
