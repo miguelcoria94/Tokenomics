@@ -184,26 +184,49 @@ def add_to_watchlist(request):
 def watchlist(request):
     try:
         watchlist = Watchlist.objects.get(user=request.user)
+        cryptos = watchlist.cryptos.all()
     except Watchlist.DoesNotExist:
-        watchlist = Watchlist.objects.create(user=request.user)
+        Watchlist.objects.create(user=request.user)
+        cryptos = []
 
-    if request.method == 'POST':
-        crypto_id = request.POST.get('crypto_id')
-        if crypto_id:
-            crypto = Cryptocurrency.objects.get(crypto_id=crypto_id)
-            watchlist.cryptos.add(crypto)
-            return redirect('watchlist')
+    # Prepare to collect data
+    crypto_details = []
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': env('COINMARKETCAP_API_KEY')
+    }
 
-    return render(request, 'watchlist.html', {'watchlist': watchlist})
+    for crypto in cryptos:
+        url = f'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
+        parameters = {'id': crypto.crypto_id}
+
+        try:
+            response = requests.get(url, headers=headers, params=parameters)
+            response.raise_for_status()
+            data = response.json()
+            crypto_data = data.get('data', {}).get(str(crypto.crypto_id), {})
+            if crypto_data:
+                crypto_details.append({
+                    'name': crypto_data.get('name'),
+                    'symbol': crypto_data.get('symbol'),
+                    'id': crypto.crypto_id,
+                    'logo': crypto_data.get('logo'),
+                    'description': crypto_data.get('description', 'No description available.'),
+                    'urls': crypto_data.get('urls', {})
+                })
+        except requests.RequestException as e:
+            return HttpResponse(f'Failed to retrieve data for crypto ID {crypto.crypto_id}: {str(e)}', status=500)
+        except ValueError:
+            return HttpResponse('Failed to parse JSON response', status=500)
+
+    return render(request, 'watchlist.html', {'crypto_details': crypto_details})
 
 def remove_from_watchlist(request, crypto_id):
+    
     crypto = Cryptocurrency.objects.get(crypto_id=crypto_id)
     watchlist = Watchlist.objects.get(user=request.user)
     watchlist.cryptos.remove(crypto)
     watchlist.save()
-    # add btc with id of 1
-    btc = Cryptocurrency.objects.get(crypto_id=1)
-    watchlist.cryptos.add(btc)
 
     return redirect('watchlist')
 

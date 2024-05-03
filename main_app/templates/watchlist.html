@@ -6,41 +6,71 @@
     <a href="{% url 'home' %}"><i class="las la-angle-left"></i> Back</a>
   </button>
 
-  <h1 id="trending" class="text-3xl font-bold text-gray-900 pt-4 mb-4">
-    <i class="las la-binoculars"></i> Watchlist
+  <h1 id="trending" class="text-3xl font-bold text-gray-900 pt-4 mb-8">
+   Watchlist
   </h1>
-  <!-- Check if the watchlist has any cryptocurrencies -->
-  {% if watchlist.cryptos.all %}
-  <div class="grid grid-cols-4 gap-4">
-    {% for crypto in watchlist.cryptos.all %}
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-3">
-      <h1>Price Chart for {{ crypto.name }}</h1>
-      <canvas id="cryptoChart" class="mt-4"></canvas>
-    </div>
+  {% if crypto_details %}
+  <div class="grid grid-cols-1  gap-4">
+    {% for crypto in crypto_details %}
+    <div
+      class="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between mb-4"
+    >
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <div>
+            <div class="text-white px-4 py-5 sm:px-6">
+        <div>
+          <img
+            src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/{{ crypto.id }}.svg"
+            class="down w-full"
+            alt="7d"
+            width="100%"
+            style="mix-blend-mode: multiply"
+          />
+        </div>
+      </div>
+          </div>
+          <img
+            src="{{ crypto.logo }}"
+            alt="{{ crypto.name }}"
+            class="w-8 h-8 mr-2"
+          />
+          <h2 class="text-xl font-bold">{{ crypto.name }}</h2>
+        </div>
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-8 col-span-1">
-      <h1>{{ crypto.name }}</h1>
-      <p class="text-gray-500 text-sm">{{ crypto.symbol }}</p>
-      <p class="text-gray-500 text-sm">Rank: {{ crypto.rank }}</p>
-      <p class="text-gray-500 text-sm">
-        Market Cap: <span class="market-cap">{{ crypto.market_cap }}</span>
-      </p>
-      <p class="text-gray-500 text-sm">Price: ${{ crypto.price }}</p>
-      <p class="text-gray-500 text-sm">Volume: ${{ crypto.volume }}</p>
-      <p class="text-gray-500 text-sm">Supply: {{ crypto.supply }}</p>
-      <p class="text-gray-500 text-sm">
-        Change (24h): {{ crypto.change_24h }}%
-      </p>
-      <p class="text-gray-500 text-sm">Change (7d): {{ crypto.change_7d }}%</p>
-      <p class="text-gray-500 text-sm">
-        Change (30d): {{ crypto.change_30d }}%
-      </p>
-      <p class="text-gray-500 text-sm">Change (1y): {{ crypto.change_1y }}%</p>
+        <form
+          action="{% url 'remove_from_watchlist' crypto.id %}"
+          method="POST"
+          class="flex justify-end"
+        >
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+           <i class="las la-trash-alt"></i> Remove
+          </button>
+        </form>
+      </div>
+      
+
+      <p class="text-gray-600 text-sm">{{ crypto.description }}</p>
+      <div class="flex justify-end items-center gap-4 mt-4">
+        <a
+          href="{% url 'single_crypto' crypto.id %}"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >View Details</a
+        >
+        <a
+          href="{{ crypto.urls.website.0 }}"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >Visit Website</a
+        >
+      </div>
     </div>
-    {% endfor %}
+    {% endfor %} {% else %}
+    <p class="text-center text-danger">Your watchlist is empty.</p>
+    {% endif %}
   </div>
-  {% else %}
-  <p class="text-center text-danger">Your watchlist is empty.</p>
-  {% endif %}
+  {% endblock %}
 </div>
-{% endblock %}

@@ -55,10 +55,10 @@ https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css
             {% if user.is_authenticated %}
             <div class="flex flex-col ">
               <div class="flex gap-8 flex-end">
-                <li><a href="{% url 'watchlist' %}" class="text-blue-800 hover:text-blue-500">Watchlist</a></li>
-                  <li><a href="{% url 'logout' %}" class="text-blue-800 hover:text-blue-500">Logout</a></li>
+                <li><a href="{% url 'watchlist' %}" class="text-blue-800 hover:text-blue-500 gap-1"><i class="las la-binoculars"></i>Watchlist</a></li>
+                  <li><a href="{% url 'logout' %}" class="text-blue-800 hover:text-blue-500 gap-1"><i class="las la-sign-out-alt"></i>Logout</a></li>
               </div>
-                  <li class="text-xs mt-2" ><i class="las la-user-check mr-2"></i> Currently logged in as {{ user }}</li>
+                  <li class="text-xs mt-2 ml-auto" > Welcome {{ user }}</li>
 
             </div>
                 

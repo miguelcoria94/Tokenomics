@@ -13,4 +13,5 @@ urlpatterns = [
     # my watchlist
     path('watchlist/', views.watchlist, name='watchlist'),
     path('watchlist/add/', views.add_to_watchlist, name='add_to_watchlist'),
+    path('watchlist/remove/<int:crypto_id>/', views.remove_from_watchlist, name='remove_from_watchlist'),
 ]
