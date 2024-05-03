@@ -11,11 +11,6 @@ Link to demo: [Track Coins Now]()
 
 Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-django-app)
 
-<div id="header" align="center">
-
-  <img src="https://i.ibb.co/CQkLKZy/Screenshot-2024-03-21-at-11-30-11-PM.png" width="800" height="400">
-
-</div>
 
 ## MVP
 
@@ -56,7 +51,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/pbwKczb/carbon-5.png" width="800" height="auto">
+  <img src="https://i.ibb.co/pbwKczb/carbon-5.png" width="auto" height="500">
 
 </div>
 
@@ -66,7 +61,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/R40MtTt/carbon-4.png" width="800" height="auto">
+  <img src="https://i.ibb.co/R40MtTt/carbon-4.png" width="auto" height="500">
 
 </div>
 
@@ -77,7 +72,7 @@ Link to trello: [View Now](https://trello.com/b/WsRM1mbR/project-3-full-stack-dj
 
 <div id="header" align="center">
 
-  <img src="https://i.ibb.co/t8TCw6r/carbon-3.png" width="800" height="auto">
+  <img src="https://i.ibb.co/t8TCw6r/carbon-3.png" width="auto" height="500">
 
 </div>
 
